@@ -1,6 +1,6 @@
 # RMIT AI - Connect4
 
-![screenshot](https://github.com/StevenKorevaar/ai1901-connectfour/blob/master/img/game_example-small.gif)
+![screenshot](https://bitbucket.org/ssardina-teaching/rmit-connect4-base/raw/master/img/game_example-small.gif)
 
 ## About The Game
 

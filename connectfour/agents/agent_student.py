@@ -41,7 +41,7 @@ class StudentAgent(RandomAgent):
 
         raise NotImplementedError
 
-    def evaluateBoardState(self, board, player):
+    def evaluateBoardState(self, board):
         """
         Your evaluation function should look at the current state and return a score for it. 
         As an example, the random agent provided works as follows:
