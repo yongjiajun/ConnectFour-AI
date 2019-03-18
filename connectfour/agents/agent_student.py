@@ -16,22 +16,16 @@ class StudentAgent(RandomAgent):
             A tuple of two integers, (row, col)
         """
         valid_moves = board.valid_moves()
-        print('Valid moves = ', board.valid_moves() ) 
 
         vals = []
         moves = []
 
         for move in valid_moves:
-            print("move = ", move)
             next_state = board.next_state(move)
-            print("next state = ", next_state)
-
             moves.append( move )
             vals.append( self.dfMiniMax(next_state, 1) )
 
         bestMove = moves[vals.index( max(vals) )]
-
-        print("Best Move = ", bestMove)
         return bestMove
 
     def dfMiniMax(self, board, depth):
@@ -44,16 +38,12 @@ class StudentAgent(RandomAgent):
             return self.evaluateBoardState(board)
 
         valid_moves = board.valid_moves()
-        print('Valid moves = ', board.valid_moves() ) 
 
         vals = []
         moves = []
 
         for move in valid_moves:
-            print("move = ", move)
             next_state = board.next_state(move)
-            print("next state = ", next_state)
-
             moves.append( move )
             vals.append( self.dfMiniMax(next_state, depth + 1) )
 
