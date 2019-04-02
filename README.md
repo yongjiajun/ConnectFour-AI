@@ -69,6 +69,10 @@ As an example, we can run:
 
 To have a `RandomAgent` play against yourself.
 
+'python -m connectfour.game --player-one RandomAgent --player-two StudentAgent --no-graphics --fast --auto-close'
+
+This may be useful for you to run games in quick succession to see how your agent performs against the random agent.
+
 ### Options
 
 Run the program with option `-h` to get the options available:
@@ -129,5 +133,6 @@ The code was refactored and functionality was extended by [Jonathon Belotti](htt
 The code was refactored and functionality was extended by [Steven Korevaar](https://github.com/StevenKorevaar) under the guidance of A/Prof. Xiaodong Li in charge of the RMIT AI course. The improvements & functionalities added are:
 
 * Dynamic loading of agents to allow for automated testing 
-
-"python -m connectfour.game --player-one RandomAgent --player-two StudentAgent --no-graphics --fast --auto-close"
+* Tracking and outputing moves made throughout a game
+* Added standard minimax agent (without evaluation function for students to start with)
+* 
