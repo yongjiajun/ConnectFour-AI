@@ -8,6 +8,7 @@ dy = [1, 0, -1, 1]
 class Board(object):
     DEFAULT_WIDTH = 7
     DEFAULT_HEIGHT = 6
+    all_moves = []
 
     def __init__(
         self,
@@ -15,6 +16,7 @@ class Board(object):
         height=None,
         width=None,
         last_move=[None, None],
+        #all_moves=None,
         num_to_connect=4
     ):
         if board is not None and (height is not None or width is not None):
@@ -24,6 +26,8 @@ class Board(object):
         self.width = len(self.board[0])
         self.height = len(self.board)
         self.last_move = last_move
+        #self.all_moves = all_moves
+        #self.all_moves.append(last_move)
         self.num_to_connect = num_to_connect
         self.winning_zones = self._build_winning_zones_map()
         self.score_array = [
@@ -101,7 +105,7 @@ class Board(object):
 
         return legal
 
-    def next_state(self, turn):
+    def next_state_rand(self, turn):
         aux = copy.deepcopy(self)
         moves = aux.legal_moves()
         if len(moves) > 0:
@@ -110,6 +114,18 @@ class Board(object):
             aux.board[row][moves[ind]] = turn
             aux.last_move = [row, moves[ind]]
         return aux
+
+    def next_state(self, turn, col):
+        next_board = copy.deepcopy(self)
+        moves = next_board.legal_moves()
+
+        if(col not in moves):
+            return 0
+
+        row = next_board.try_move(col)
+        next_board.board[row][col] = turn
+        next_board.last_move = [row, col]
+        return next_board
 
     def _empty_board(self, height, width):
         if height is None:

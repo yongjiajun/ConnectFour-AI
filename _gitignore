@@ -103,3 +103,6 @@ ENV/
 .pytest_cache/
 *.lock
 /.idea
+
+connectfour/agents/agent_hard.py
+.vscode/
