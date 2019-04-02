@@ -135,4 +135,5 @@ The code was refactored and functionality was extended by [Steven Korevaar](http
 * Dynamic loading of agents to allow for automated testing 
 * Tracking and outputing moves made throughout a game
 * Added standard minimax agent (without evaluation function for students to start with)
-* 
+* Fixed board.next_state(), winner(), and terminal() functions
+

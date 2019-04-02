@@ -15,7 +15,7 @@ class StudentAgent(RandomAgent):
         Returns:
             A tuple of two integers, (row, col)
         """
-        print("starting turn")
+
         valid_moves = board.valid_moves()
         vals = []
         moves = []

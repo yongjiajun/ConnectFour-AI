@@ -89,6 +89,10 @@ class Board(object):
         """
         Returns true when the game is finished, otherwise false.
         """
+        # check for a winner:
+        if (self.winner() != 0):
+            return False
+
         for i in range(len(self.board[0])):
             if self.board[0][i] == 0:
                 return False
@@ -147,7 +151,7 @@ class Board(object):
     def winner(self):
         """
         Takes the board as input and determines if there is a winner.
-        If the game has a winner, it returns the player number (Player One = 1, Player Two = -1).
+        If the game has a winner, it returns the player number (Player One = 1, Player Two = 2).
         If the game is still ongoing, it returns zero.
         """
         row_winner = self._check_rows()
