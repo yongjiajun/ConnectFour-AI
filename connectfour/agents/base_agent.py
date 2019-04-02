@@ -4,8 +4,6 @@ import random
 class TestAgent(RandomAgent):
     def __init__(self, name):
         super().__init__(name)
-        print('IMPORTED')
-
 
     def get_move(self, board):
         """

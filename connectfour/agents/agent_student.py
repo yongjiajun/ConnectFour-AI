@@ -26,7 +26,6 @@ class StudentAgent(RandomAgent):
             vals.append( self.dfMiniMax(next_state, 1) )
 
         bestMove = moves[vals.index( max(vals) )]
-        print("making move: ", bestMove)
         return bestMove
 
     def dfMiniMax(self, board, depth):
@@ -40,9 +39,7 @@ class StudentAgent(RandomAgent):
         moves = []
 
         for move in valid_moves:
-            print("cur move: ", move)
             next_state = board.next_state(self.id, move[1])
-            print("next state: ", next_state)
             moves.append( move )
             vals.append( self.dfMiniMax(next_state, depth + 1) )
 

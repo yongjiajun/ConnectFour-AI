@@ -104,5 +104,5 @@ ENV/
 *.lock
 /.idea
 
-connectfour/agents/agent_hard.py
+/connectfour/agents/agent_hard.py
 .vscode/
