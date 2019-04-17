@@ -5,7 +5,8 @@ class StudentAgent(RandomAgent):
     def __init__(self, name):
         super().__init__(name)
         self.MaxDepth = 1
-
+        self.run = 0
+        self.bestMoveCtr = 0
 
     def get_move(self, board):
         """
@@ -26,6 +27,7 @@ class StudentAgent(RandomAgent):
             vals.append( self.dfMiniMax(next_state, 1) )
 
         bestMove = moves[vals.index( max(vals) )]
+        self.bestMoveCtr += 1
         return bestMove
 
     def dfMiniMax(self, board, depth):
@@ -69,11 +71,11 @@ class StudentAgent(RandomAgent):
         Look into board.py for more information/descriptions of each, or to look for any other definitions which may help you.
 
         Board Variables:
-            board.width 
-            board.height
-            board.last_move
-            board.num_to_connect
-            board.winning_zones
+            board.width (7)
+            board.height (6)
+            board.last_move (row, column)
+            board.num_to_connect (4)
+            board.winning_zones ()
             board.score_array 
             board.current_player_score
 
@@ -87,6 +89,16 @@ class StudentAgent(RandomAgent):
             next_state(turn)
             winner()
         """
-				
+        
+        print("DEBUG: New run: " + str(self.run) + " Best move: " + str (self.bestMoveCtr) + '\n')
+        print("Board width: " + str(board.width) + '\n')
+        print("Board height: " + str(board.height) + '\n')
+        print("Board last_move: " + str(board.last_move) + '\n')
+        print("Board num_to_connect: " + str(board.num_to_connect) + '\n')
+        print("Board winning_zones: " + str(board.winning_zones) + '\n')
+        print("Board score_array: " + str(board.score_array) + '\n')
+        print("Board current_player_score: " + str(board.current_player_score) + '\n')
+		
+        self.run += 1
         return random.uniform(0, 1)
 
