@@ -18,6 +18,7 @@ class StudentAgent(RandomAgent):
         """
 
         valid_moves = board.valid_moves()
+        print(type(valid_moves))
         vals = []
         moves = []
 
@@ -37,6 +38,7 @@ class StudentAgent(RandomAgent):
             return self.evaluateBoardState(board)
 
         valid_moves = board.valid_moves()
+        print(str(valid_moves))
         vals = []
         moves = []
 
@@ -90,14 +92,14 @@ class StudentAgent(RandomAgent):
             winner()
         """
         
-        print("DEBUG: New run: " + str(self.run) + " Best move: " + str (self.bestMoveCtr) + '\n')
-        print("Board width: " + str(board.width) + '\n')
-        print("Board height: " + str(board.height) + '\n')
-        print("Board last_move: " + str(board.last_move) + '\n')
-        print("Board num_to_connect: " + str(board.num_to_connect) + '\n')
-        print("Board winning_zones: " + str(board.winning_zones) + '\n')
-        print("Board score_array: " + str(board.score_array) + '\n')
-        print("Board current_player_score: " + str(board.current_player_score) + '\n')
+        # print("DEBUG: New run: " + str(self.run) + " Best move: " + str (self.bestMoveCtr) + '\n')
+        # print("Board width: " + str(board.width) + '\n')
+        # print("Board height: " + str(board.height) + '\n')
+        # print("Board last_move: " + str(board.last_move) + '\n')
+        # print("Board num_to_connect: " + str(board.num_to_connect) + '\n')
+        # print("Board winning_zones: " + str(board.winning_zones) + '\n')
+        # print("Board score_array: " + str(board.score_array) + '\n')
+        # print("Board current_player_score: " + str(board.current_player_score) + '\n')
 		
         self.run += 1
         return random.uniform(0, 1)
