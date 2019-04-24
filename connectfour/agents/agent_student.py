@@ -2,10 +2,10 @@ from connectfour.agents.computer_player import RandomAgent
 from connectfour.agents.agent import Agent
 import random
 
-class StudentAgent(Agent):
+class StudentAgent(RandomAgent):
     def __init__(self, name):
         super().__init__(name)
-        self.MaxDepth = 2
+        self.MaxDepth = 1
 
 
     def get_move(self, board):
@@ -132,103 +132,77 @@ class StudentAgent(Agent):
             next_state(turn)
             winner()
         """
+
+        p1 = self.check_score(board,self.id)
+        p2 = self.check_score(board,self.id%2+1)
+
+        print (p1)
+        print (p2)
         
-        # print(str(board.width) + " H.W " + str(board.height))
-        #print("board.last_move: " + str(board.last_move))
-        # print(board.num_to_connect)
-        #print(board.winning_zones)
-        #print(board.score_array )
-        #print(board.current_player_score)
-
-        #print(board.get_cell_value(5,1))
-        #print(board.try_move(4))
-        #print(board.valid_move(4,4))
-        #print(board.valid_moves())
-        #print(board.terminal())
-        #print("legal_moves: "+str(board.legal_moves()))
-        #print(board.next_state(1,1))
-        #print(board.winner())
-        #print(board.winning_zones)
-
-      
-
-        # print(board.board)
-        # print (board.winning_zones[0][0])
-        # board.winning_zones[0][0].remove(24)
-        # print (board.winning_zones[0][0])
+        if((p1+p2) != 0):
+            return p1/(p1+p2)
+        elif ((p1+p2) == 0 and p1 == 0):
+            return 0
+        else:
+            return 0.5
 
 
 
-        #print(board.board[5][0])
+    def check_score(self, board, id):
+        score = 0
+        #Check center pieces
+        center_piece = []
+        for row in range(board.height):
+            # print(str(row)+" : "+str(board.width))
+            center_piece.append(board.get_cell_value(row,board.width//2))
+        
+        score += 3 * center_piece.count(id)
 
-        # print("before: " + str(board.score_array))
+        #Check how many Horizontally
+        for row in range(board.height):
+            for col in range(board.width - 3):
+                connect = [board.get_cell_value(row, col+i) for i in range(board.num_to_connect)]
+                #[0,1,0,2]
+                score += self.check_connect(connect,id) 
+        # print (score)
+        
+        #Check how many Vertically
+        for col in range(board.width):
+            for row in range(board.height - 3):
+                connect = [board.get_cell_value(row+i, col) for i in range(board.num_to_connect)]
+                score += self.check_connect(connect,id)
+        
+        #Check how many up diagonal
+        for row in range(board.height - 3):
+            for col in range(board.width - 3):
+                connect = [board.get_cell_value(row + 3 - i, col+i) for i in range(board.num_to_connect)]
+                score += self.check_connect(connect,id)
+              
+        #Check how many down diagonal
+        for row in range(board.height - 3):
+            for col in range(board.width - 3):
+                connect = [board.get_cell_value(row+i, col+i) for i in range(board.num_to_connect)]
+                score += self.check_connect(connect,id)
 
-        #self.flashscorearray(board)
-        for i in range(board.height):
-            for j in range(board.width):
-                #print(board.board[i][j])
-                if(board.board[i][j]==1):
-                    board.update_scores(j,abs(i-(board.height-1)),1,True)
-                elif(board.board[i][j]==2):
-                    board.update_scores(j,abs(i-(board.height-1)),2,False)
-        # print("after: " + str(board.score_array))  #已经update两边的score_array成功
-
-        #print(board.last_move)
-        # print(str(board.last_move[0]) + " : " + str(board.last_move[1]))
-        #print(board.winning_zones[board.last_move[1]][abs(board.last_move[0]-5)])
-        target = board.winning_zones[board.last_move[1]][abs(board.last_move[0]-5)]
-        # print(target)
-        # print(len(target))
-
-        p = 0
-
-        # print(self.id)
-
-        # print("test")
-
-        for l in range(len(target)):
-            #print(board.score_array[abs(self.id-3)-1][target[l]])
-            if(board.score_array[abs(self.id-3)-1][target[l]] == 0):
-                p += board.score_array[self.id-1][target[l]] + 1
-                # print('p: '+ str(p))
-                
-
-        # print('p: '+ str(p))
-
-        pf=0
-
-        vm = board.valid_moves()
-        for m in vm:
-            next_board = board.next_state(abs(self.id-3),m[1]) #下一步走完并存储
-            # print(m)  # (1,0) (2,1) (2,2) (0,3) (0,4) (1,5)
-            # print(" next_board.board: "+str(next_board.board))
-            if(self.id == 1):
-                next_board.update_scores(m[1], abs(m[0]-(board.height-1)),  2, False)
-            elif(self.id == 2):
-                next_board.update_scores(m[1], abs(m[0]-(board.height-1)),  1, True)
-            # print(next_board.score_array) #单点更新成功
+        return score
+    
+    def check_connect(self,connect,id):
+        score = 0
+        
+        if connect.count(id) == 4:
+            score += 100
+        elif connect.count(id) == 3 and connect.count(0) == 1:
+            score += 10
+        elif connect.count(id) == 2 and connect.count(0) == 2:
+            score += 5
+        elif connect.count(id) == 1 and connect.count(0) == 2:
+            score += 1
             
-            tar = board.winning_zones[m[1]][abs(m[0]-(board.height-1))]
-            # print(tar)  #[4, 24, 25, 49]
 
-            t=0
-
-            for ll in range(len(tar)):
-                if (next_board.score_array[self.id-1][tar[ll]] == 0):
-                    t += next_board.score_array[abs(self.id-3)-1][tar[ll]] + 1
-            # print(t)
-            if(t > pf):
-                pf=t
-        # print("最终pf: " + str(pf))
+        return score
 
 
 
 
 
-
-        return p/(p+pf)
-				
-        # return random.uniform(0, 1)
-
-    # def check(self):
 
