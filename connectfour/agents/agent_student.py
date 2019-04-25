@@ -44,7 +44,11 @@ class StudentAgent(RandomAgent):
         
         # print(vals)
         # print(max(vals))
-        bestMove = moves[vals.index( max(vals) )] #最大概率点，所对的index也就是柱，对用到moves里面的具体步法
+        try:
+            bestMove = moves[vals.index( max(vals) )] #最大概率点，所对的index也就是柱，对用到moves里面的具体步法
+        except:
+            print("It's a draw! But the game wouldn't stop :( Enjoy reading the traceback message!")
+
         # print (vals.index( max(vals)))
         print ("best move is: " + str(bestMove))
         # print(board.board)
