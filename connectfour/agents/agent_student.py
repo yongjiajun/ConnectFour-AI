@@ -76,16 +76,16 @@ class StudentAgent(RandomAgent):
             #print (1)
             #print(depth)
             
-            print("exit depth: " + str(depth))
+            # print("exit depth: " + str(depth))
             return self.evaluateBoardState(board)
 
-        print("depth: " + str(depth))
+        # print("depth: " + str(depth))
         valid_moves = board.valid_moves()
         vals = []
         moves = []
         validMovesLeft = False
-        print(board.board)
-        print(board.legal_moves())
+        # print(board.board)
+        # print(board.legal_moves())
         for move in valid_moves:
             validMovesLeft = True
             if depth % 2 == 1:
@@ -108,6 +108,7 @@ class StudentAgent(RandomAgent):
                     break
         
         if validMovesLeft == False:
+            print("Depth limited!")
             return self.evaluateBoardState(board)
 
         if alphaMode:
