@@ -5,7 +5,7 @@ import random
 class StudentAgent(RandomAgent):
     def __init__(self, name):
         super().__init__(name)
-        self.MaxDepth = 4
+        self.MaxDepth = 5
 
 
     def get_move(self, board):
@@ -29,7 +29,7 @@ class StudentAgent(RandomAgent):
             moves.append( move ) #moves就是收集从第0行到第6行可以出现在棋盘上可添加的步数
             # print (move)
             #print("move[0]: "+str(move[0])+", move[1]: "+str(move[1]))
-            a=self.dfMiniMax(next_state, 1) #计算概率的，Mini Max
+            a=self.dfMiniMax(next_state, 1, -float('inf'), float('inf')) #计算概率的，Mini Max
             #print (a)
             vals.append( a ) #可能是搜集各个点的概率,每次的str(self.dfMiniMax(next_state, 1))值都不同
             #print (a)
@@ -65,7 +65,7 @@ class StudentAgent(RandomAgent):
 
 
 
-    def dfMiniMax(self, board, depth): #利用递归的算法计算出所有步骤所对的分数，此方法要研究
+    def dfMiniMax(self, board, depth, alpha, beta): #利用递归的算法计算出所有步骤所对的分数，此方法要研究
         # Goal return column with maximized scores of all possible next states
         
         if depth == self.MaxDepth: #目前全都是走这一步
@@ -81,22 +81,30 @@ class StudentAgent(RandomAgent):
 
         for move in valid_moves:
             if depth % 2 == 1:
-                next_state = board.next_state(self.id % 2 + 1, move[1])#
+                next_state = board.next_state(self.id % 2 + 1, move[1])
+                alphaMode = False
             else:
                 next_state = board.next_state(self.id, move[1])
+                alphaMode = True
                 
             moves.append( move )
-            vals.append( self.dfMiniMax(next_state, depth + 1) )
+            vals.append( self.dfMiniMax(next_state, depth + 1, alpha, beta) )
 
+            if alphaMode:
+                alpha = max(alpha, max(vals))
+                if alpha >= beta:
+                    break
+            else:
+                beta = min(min(vals), beta)
+                if alpha >= beta:
+                    break
         
-        if depth % 2 == 1:
-            bestVal = min(vals)
-        else:
+        if alphaMode:
             bestVal = max(vals)
+        else:
+            bestVal = min(vals)
 
         return bestVal
-
-
 
 
 
