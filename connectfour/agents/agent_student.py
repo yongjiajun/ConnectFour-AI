@@ -72,14 +72,18 @@ class StudentAgent(RandomAgent):
             #print (1)
             #print(depth)
             
-
+            print("exit depth: " + str(depth))
             return self.evaluateBoardState(board)
 
+        print("depth: " + str(depth))
         valid_moves = board.valid_moves()
         vals = []
         moves = []
-
+        validMovesLeft = False
+        print(board.board)
+        print(board.legal_moves())
         for move in valid_moves:
+            validMovesLeft = True
             if depth % 2 == 1:
                 next_state = board.next_state(self.id % 2 + 1, move[1])
                 alphaMode = False
@@ -99,6 +103,9 @@ class StudentAgent(RandomAgent):
                 if alpha >= beta:
                     break
         
+        if validMovesLeft == False:
+            return self.evaluateBoardState(board)
+
         if alphaMode:
             bestVal = max(vals)
         else:
