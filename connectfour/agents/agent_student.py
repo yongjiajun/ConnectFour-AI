@@ -47,7 +47,7 @@ class StudentAgent(RandomAgent):
         try:
             bestMove = moves[vals.index( max(vals) )] #最大概率点，所对的index也就是柱，对用到moves里面的具体步法
         except:
-            print("It's a draw! But the game wouldn't stop :( Enjoy reading the traceback message!")
+            print("It's a draw! But the game wouldn't stop (unless Steven fixes it) :( Enjoy reading the traceback message below!\n\n")
 
         # print (vals.index( max(vals)))
         print ("best move is: " + str(bestMove))
@@ -311,75 +311,75 @@ class StudentAgent(RandomAgent):
 				
         # return random.uniform(0, 1)
 
-    def check_score(self, board, id):
-        score = 0
-        #Check center pieces
-        center_piece = []
-        for row in range(board.height):
-            # print(str(row)+" : "+str(board.width))
-            center_piece.append(board.get_cell_value(row,board.width//2))
+    # def check_score(self, board, id):
+    #     score = 0
+    #     #Check center pieces
+    #     center_piece = []
+    #     for row in range(board.height):
+    #         # print(str(row)+" : "+str(board.width))
+    #         center_piece.append(board.get_cell_value(row,board.width//2))
         
-        score += 3 * center_piece.count(id)
+    #     score += 3 * center_piece.count(id)
 
-        #Check how many Horizontally
-        for row in range(board.height):
-            for col in range(board.width - 3):
-                connect = [board.get_cell_value(row, col+i) for i in range(board.num_to_connect)]
-                #[0,1,0,2]
-                score += self.check_connect(connect,id) 
-        # print (score)
+    #     #Check how many Horizontally
+    #     for row in range(board.height):
+    #         for col in range(board.width - 3):
+    #             connect = [board.get_cell_value(row, col+i) for i in range(board.num_to_connect)]
+    #             #[0,1,0,2]
+    #             score += self.check_connect(connect,id) 
+    #     # print (score)
         
-        #Check how many Vertically
-        for col in range(board.width):
-            for row in range(board.height - 3):
-                connect = [board.get_cell_value(row+i, col) for i in range(board.num_to_connect)]
-                score += self.check_connect(connect,id)
+    #     #Check how many Vertically
+    #     for col in range(board.width):
+    #         for row in range(board.height - 3):
+    #             connect = [board.get_cell_value(row+i, col) for i in range(board.num_to_connect)]
+    #             score += self.check_connect(connect,id)
         
-        #Check how many up diagonal
-        for row in range(board.height - 3):
-            for col in range(board.width - 3):
-                connect = [board.get_cell_value(row + 3 - i, col+i) for i in range(board.num_to_connect)]
-                score += self.check_connect(connect,id)
+    #     #Check how many up diagonal
+    #     for row in range(board.height - 3):
+    #         for col in range(board.width - 3):
+    #             connect = [board.get_cell_value(row + 3 - i, col+i) for i in range(board.num_to_connect)]
+    #             score += self.check_connect(connect,id)
               
-        #Check how many down diagonal
-        for row in range(board.height - 3):
-            for col in range(board.width - 3):
-                connect = [board.get_cell_value(row+i, col+i) for i in range(board.num_to_connect)]
-                score += self.check_connect(connect,id)
+    #     #Check how many down diagonal
+    #     for row in range(board.height - 3):
+    #         for col in range(board.width - 3):
+    #             connect = [board.get_cell_value(row+i, col+i) for i in range(board.num_to_connect)]
+    #             score += self.check_connect(connect,id)
 
-        return score
+    #     return score
     
-    def check_connect(self,connect,id):
-        score = 0
+    # def check_connect(self,connect,id):
+    #     score = 0
         
-        if connect.count(id) == 4:
-            score += 100
-        elif connect.count(id) == 3 and connect.count(0) == 1:
-            score += 20
-        elif connect.count(id) == 2 and connect.count(0) == 2:
-            score += 5
-        elif connect.count(id) == 1 and connect.count(0) == 2:
-            score += 1
-        elif connect.count(id) == 0 and connect.count(0) == 3:
-            score += 0.1
+    #     if connect.count(id) == 4:
+    #         score += 100
+    #     elif connect.count(id) == 3 and connect.count(0) == 1:
+    #         score += 20
+    #     elif connect.count(id) == 2 and connect.count(0) == 2:
+    #         score += 5
+    #     elif connect.count(id) == 1 and connect.count(0) == 2:
+    #         score += 1
+    #     elif connect.count(id) == 0 and connect.count(0) == 3:
+    #         score += 0.1
             
-        # if connect.count(id%2+1) == 3 and connect.count(0) == 1:
-        #     score -= 50
+    #     # if connect.count(id%2+1) == 3 and connect.count(0) == 1:
+    #     #     score -= 50
 
-        return score
-
-
+    #     return score
 
 
 
 
 
-    def flashscorearray(self, board):
-         for i in range(board.height):
-            for j in range(board.width):
-                #print(board.board[i][j])
-                if(board.board[i][j]==1):
-                    board.update_scores(j,abs(i-(board.height-1)),1,True)
-                elif(board.board[i][j]==2):
-                    board.update_scores(j,abs(i-(board.height-1)),2,False)
+
+
+    # def flashscorearray(self, board):
+    #      for i in range(board.height):
+    #         for j in range(board.width):
+    #             #print(board.board[i][j])
+    #             if(board.board[i][j]==1):
+    #                 board.update_scores(j,abs(i-(board.height-1)),1,True)
+    #             elif(board.board[i][j]==2):
+    #                 board.update_scores(j,abs(i-(board.height-1)),2,False)
 
