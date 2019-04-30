@@ -3,7 +3,7 @@ from connectfour.agents.agent import Agent
 import random
 
 
-class StudentAgent(RandomAgent):
+class StudentAgent(Agent):
     def __init__(self, name):
         super().__init__(name)
         self.MaxDepth = 4
@@ -18,55 +18,39 @@ class StudentAgent(RandomAgent):
             A tuple of two integers, (row, col)
         """
 
-        valid_moves = board.valid_moves() #是一个generator，生成有效的点，col从0到6
-        vals = [] #分别两个List
+        valid_moves = board.valid_moves() 
+        vals = []
         moves = []
 
         for move in valid_moves: 
-            # id就是1或2; move就是(5,1)typle指定哪个点; move[0]就是指5，move[1]就是指1
-            next_state = board.next_state(self.id, move[1]) #就是假设move[1]放进去了之后的Board对象
-            moves.append( move ) #moves就是收集从第0行到第6行可以出现在棋盘上可添加的步数
-            # print (move)
-            #print("move[0]: "+str(move[0])+", move[1]: "+str(move[1]))
-            a=self.dfMiniMaxwithAlphaBeta(next_state, 1, -float('inf'), float('inf')) #计算概率的，Mini Max
-            print (a)
-            vals.append( a ) #可能是搜集各个点的概率,每次的str(self.dfMiniMaxwithAlphaBeta(next_state, 1))值都不同
-            #print (a)
-            
-            #print (self.dfMiniMaxwithAlphaBeta(next_state, 1))
-            #print (vals)
-            # print(board.next_state(2, move[1]).board)
-            # print(board.next_state(2, move[1]).last_move)
-            # print(board.last_move)
+            next_state = board.next_state(self.id, move[1])
+            moves.append( move ) 
+            a=self.dfMiniMaxwithAlphaBeta(next_state, 1, -float('inf'), float('inf')) 
+            vals.append( a )
             
         try:
-            bestMove = moves[vals.index( max(vals) )] #最大概率点，所对的index也就是柱，对用到moves里面的具体步法
-            print(vals.index( max(vals) ))
+            bestMove = moves[vals.index( max(vals) )]
         except:
             print("It's a draw! But the game wouldn't stop (unless Steven fixes it) :( Enjoy reading the traceback message below!\n\n")
 
+        
         print ("best move is: " + str(bestMove))
+
+        print ()
 
         return bestMove
 
 
+    def dfMiniMaxwithAlphaBeta(self, board, depth, alpha, beta): 
 
-
-
-    def dfMiniMaxwithAlphaBeta(self, board, depth, alpha, beta): #利用递归的算法计算出所有步骤所对的分数，此方法要研究
-        # Goal return column with maximized scores of all possible next states
-        # now with Alpha-Beta Pruning B-)
-        
-        if depth == self.MaxDepth: #目前全都是走这一步
-            #print (1)
-            #print(depth)
-            # print("exit depth: " + str(depth))
+        if depth == self.MaxDepth: 
             return self.evaluateBoardState(board)
 
         valid_moves = board.valid_moves()
         vals = []
         moves = []
         validMovesLeft = False
+        
         for move in valid_moves:
             validMovesLeft = True
             if depth % 2 == 1:
@@ -96,12 +80,11 @@ class StudentAgent(RandomAgent):
             bestVal = max(vals)
         else:
             bestVal = min(vals)
-        
 
         return bestVal
 
 
-    def evaluateBoardState(self, board): #已经是一个合法的board了
+    def evaluateBoardState(self, board): 
         """
         Your evaluation function should look at the current state and return a score for it. 
         As an example, the random agent provided works as follows:
@@ -115,13 +98,13 @@ class StudentAgent(RandomAgent):
         Look into board.py for more information/descriptions of each, or to look for any other definitions which may help you.
 
         Board Variables:
-            board.width     7
-            board.height    6
+            board.width     
+            board.height    
             board.last_move
             board.num_to_connect
-            board.winning_zones ？可能不需要用到
-            board.score_array ？
-            board.current_player_score ？
+            board.winning_zones 
+            board.score_array 
+            board.current_player_score 
 
         Board Functions:
             get_cell_value(row, col)
@@ -133,7 +116,7 @@ class StudentAgent(RandomAgent):
             next_state(turn)
             winner()
         """
-
+        
         for i in range(board.height):
             for j in range(board.width):
                 if(board.board[i][j]==1):
@@ -141,38 +124,28 @@ class StudentAgent(RandomAgent):
                 elif(board.board[i][j]==2):
                     board.update_scores(j,abs(i-(board.height-1)),2,False)
 
-        p = 0
+        p = self.scoreCaculate(board, self.id)
 
-        for i in range(len(board.score_array[self.id-1])):
-            if (board.score_array[self.id-1][i] == 4):
-                p += 50000
-            elif (board.score_array[self.id-1][i] == 3 and board.score_array[self.id%2][i] == 0):
-                p += 792
-            elif (board.score_array[self.id-1][i] == 2 and board.score_array[self.id%2][i] == 0):
-                p += 288
-            elif (board.score_array[self.id-1][i] == 1 and board.score_array[self.id%2][i] == 0):
-                p += 36
-            elif (board.score_array[self.id-1][i] == 0 and board.score_array[self.id%2][i] == 0):
-                p += 4
-
-        pf = 0
-
-        for j in range(len(board.score_array[self.id%2])):
-            if (board.score_array[self.id%2][j] == 4):
-                pf += 50000
-            elif (board.score_array[self.id%2][j] == 3 and board.score_array[self.id-1][j] == 0):
-                pf += 792
-            elif (board.score_array[self.id%2][j] == 2 and board.score_array[self.id-1][j] == 0):
-                pf += 288
-            elif (board.score_array[self.id%2][j] == 1 and board.score_array[self.id-1][j] == 0):
-                pf += 36
-            elif (board.score_array[self.id%2][j] == 0 and board.score_array[self.id-1][j] == 0):
-                pf += 4
-        # print (pf)
-        
+        pf = self.scoreCaculate(board, self.id%2+1)
 
         if (p==0 and pf==0):
             return 0.5
         else:
             return p/(p+pf)
+
+    def scoreCaculate(self, board, id):
+        p = 0
+        for i in range(len(board.score_array[id-1])):
+            if (board.score_array[id-1][i] == 4):
+                p += 12500
+            elif (board.score_array[id-1][i] == 3 and board.score_array[id%2][i] == 0):
+                p += 198
+            elif (board.score_array[id-1][i] == 2 and board.score_array[id%2][i] == 0):
+                p += 72
+            elif (board.score_array[id-1][i] == 1 and board.score_array[id%2][i] == 0):
+                p += 9
+            elif (board.score_array[id-1][i] == 0 and board.score_array[id%2][i] == 0):
+                p += 1
+        return p
+
 
