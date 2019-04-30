@@ -24,9 +24,7 @@ class StudentAgent(RandomAgent):
 
         for move in valid_moves: 
             # id就是1或2; move就是(5,1)typle指定哪个点; move[0]就是指5，move[1]就是指1
-
             next_state = board.next_state(self.id, move[1]) #就是假设move[1]放进去了之后的Board对象
-            #print("next_state.board: "+str(next_state.board))
             moves.append( move ) #moves就是收集从第0行到第6行可以出现在棋盘上可添加的步数
             # print (move)
             #print("move[0]: "+str(move[0])+", move[1]: "+str(move[1]))
@@ -41,29 +39,13 @@ class StudentAgent(RandomAgent):
             # print(board.next_state(2, move[1]).last_move)
             # print(board.last_move)
             
-            
-        
-        # print(vals)
-        # print(max(vals))
         try:
             bestMove = moves[vals.index( max(vals) )] #最大概率点，所对的index也就是柱，对用到moves里面的具体步法
             print(vals.index( max(vals) ))
         except:
             print("It's a draw! But the game wouldn't stop (unless Steven fixes it) :( Enjoy reading the traceback message below!\n\n")
 
-        # print (vals.index( max(vals)))
         print ("best move is: " + str(bestMove))
-        # print(board.board)
-
-        # if (self.id == 1):
-        #     isplayerone = True
-        # else:
-        #     isplayerone = False
-        # board.update_scores(bestMove[1],abs(bestMove[0]-5),self.id,isplayerone) #如果走了bestMove的update
-        
-        # print(board.score_array)
-
-        print ()
 
         return bestMove
 
@@ -81,13 +63,10 @@ class StudentAgent(RandomAgent):
             # print("exit depth: " + str(depth))
             return self.evaluateBoardState(board)
 
-        # print("depth: " + str(depth))
         valid_moves = board.valid_moves()
         vals = []
         moves = []
         validMovesLeft = False
-        # print(board.board)
-        # print(board.legal_moves())
         for move in valid_moves:
             validMovesLeft = True
             if depth % 2 == 1:
@@ -120,9 +99,6 @@ class StudentAgent(RandomAgent):
         
 
         return bestVal
-
-
-
 
 
     def evaluateBoardState(self, board): #已经是一个合法的board了
@@ -158,17 +134,13 @@ class StudentAgent(RandomAgent):
             winner()
         """
 
-        #self.flashscorearray(board)
         for i in range(board.height):
             for j in range(board.width):
-                #print(board.board[i][j])
                 if(board.board[i][j]==1):
                     board.update_scores(j,abs(i-(board.height-1)),1,True)
                 elif(board.board[i][j]==2):
                     board.update_scores(j,abs(i-(board.height-1)),2,False)
-        # print("after: " + str(board.score_array))  #已经update两边的score_array成功
 
-        # s = board.width*board.height
         p = 0
 
         for i in range(len(board.score_array[self.id-1])):
@@ -182,7 +154,6 @@ class StudentAgent(RandomAgent):
                 p += 36
             elif (board.score_array[self.id-1][i] == 0 and board.score_array[self.id%2][i] == 0):
                 p += 4
-        # print(p)
 
         pf = 0
 
@@ -200,7 +171,6 @@ class StudentAgent(RandomAgent):
         # print (pf)
         
 
-        # print (p/(p+pf))
         if (p==0 and pf==0):
             return 0.5
         else:
