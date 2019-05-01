@@ -114,7 +114,7 @@ class StudentAgent(Agent):
             winner()
         """
         
-        # update score_array of current board
+        # update score_array of current board for each player
         for i in range(board.height):
             for j in range(board.width):
                 if(board.board[i][j]==1):
@@ -122,18 +122,18 @@ class StudentAgent(Agent):
                 elif(board.board[i][j]==2):
                     board.update_scores(j,abs(i-(board.height-1)),2,False)
 
-        # Calculate current Agent's Winning score
+        # Calculate current player's winning score
         p = self.scoreCaculate(board, self.id)
-        # Calculate the other Agent's Winning score
+        # Calculate the other player's winning score
         pf = self.scoreCaculate(board, self.id%2+1)
 
-        # Return current Agent's Winning probability
+        # Return current player's winning probability
         if (p==0 and pf==0):
             return 0.5
         else:
             return p/(p+pf)
 
-    # Calculate function for calculating the score of available winning steps in one player
+    # Calculate function for calculating the score of available winning steps for a player
     def scoreCaculate(self, board, id):
         p = 0
         for i in range(len(board.score_array[id-1])):
