@@ -6,7 +6,7 @@ import random
 class StudentAgent(Agent):
     def __init__(self, name):
         super().__init__(name)
-        self.MaxDepth = 4
+        self.MaxDepth = 4   # Using MaxDepth as 4
 
 
     def get_move(self, board):
@@ -18,7 +18,7 @@ class StudentAgent(Agent):
             A tuple of two integers, (row, col)
         """
 
-        valid_moves = board.valid_moves() 
+        valid_moves = board.valid_moves()
         vals = []
         moves = []
 
@@ -33,14 +33,9 @@ class StudentAgent(Agent):
         except:
             print("It's a draw! But the game wouldn't stop (unless Steven fixes it) :( Enjoy reading the traceback message below!\n\n")
 
-        
-        print ("best move is: " + str(bestMove))
-
-        print ()
-
         return bestMove
 
-
+    # MiniMax with Alpha-Beta function
     def dfMiniMaxwithAlphaBeta(self, board, depth, alpha, beta): 
 
         if depth == self.MaxDepth: 
@@ -71,11 +66,13 @@ class StudentAgent(Agent):
                 beta = min(min(vals), beta)
                 if alpha >= beta:
                     break
-        
+        # give a Warning if the search depth is bigger than the current available moving steps 
+        # and use calculate the Winning probability with current state. 
         if validMovesLeft == False:
             print("Depth limited!")
             return self.evaluateBoardState(board)
 
+        # Alpha-Beta mode, return max value with odd level, return min value with even level. 
         if alphaMode:
             bestVal = max(vals)
         else:
@@ -117,6 +114,7 @@ class StudentAgent(Agent):
             winner()
         """
         
+        # update score_array of current board
         for i in range(board.height):
             for j in range(board.width):
                 if(board.board[i][j]==1):
@@ -124,15 +122,18 @@ class StudentAgent(Agent):
                 elif(board.board[i][j]==2):
                     board.update_scores(j,abs(i-(board.height-1)),2,False)
 
+        # Calculate current Agent's Winning score
         p = self.scoreCaculate(board, self.id)
-
+        # Calculate the other Agent's Winning score
         pf = self.scoreCaculate(board, self.id%2+1)
 
+        # Return current Agent's Winning probability
         if (p==0 and pf==0):
             return 0.5
         else:
             return p/(p+pf)
 
+    # Calculate function for calculating the score of available winning steps in one player
     def scoreCaculate(self, board, id):
         p = 0
         for i in range(len(board.score_array[id-1])):
