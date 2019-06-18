@@ -40,8 +40,8 @@ Run `black` with: `pipenv run black connectfour tests` (You can omit `pipenv run
 
 ### Run
 
-1. `git clone https://github.com/stevenkorevaar/ai1901-connectfour.git`
-2. `cd rmit-connectfour`
+1. `git clone https://github.com/yongjiajun/ConnectFour-AI.git`
+2. `cd ConnectFour-AI`
 3. `pipenv install` (this will install all dependencies needed) 
 4. `pipenv shell` (activate the virtual environment for the project/directory)
     * To deactivate/exit from the environment just type `exit` or `Control-D`.
