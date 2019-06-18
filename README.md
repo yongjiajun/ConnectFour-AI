@@ -1,6 +1,6 @@
 # RMIT AI - Connect4
 
-![screenshot](https://github.com/StevenKorevaar/ai1901-connectfour/blob/master/img/game_example-small.gif)
+![screenshot](https://github.com/yongjiajun/ConnectFour-AI/blob/master/img/game_example-small.gif)
 
 ## About The Game
 
@@ -60,12 +60,12 @@ The currently available player types are:
 * `HumanPlayer` - Player is controlled by user via GUI **[DEFAULT OPTION]**
 * `RandomAgent` - Player is controlled by computer and just chooses random valid columns to place token
 * `MonteCarloAgent` - Player is controlled by computer and uses Monte Carlo Tree Search to find a good move
-* `StudentAgent` - Template player to complete by students. Currently, is a  `RandomAgent`
+* `StudentAgent` - Template player to complete by students. **[OUR IMPLEMENTATION]**
 
 
-As an example to have a `RandomAgent` play against yourself, we can run:
+As an example to have a `StudentAgent` play against yourself, we can run:
 
-`python -m connectfour.game --player-one RandomAgent --player-two HumanPlayer`
+`python -m connectfour.game --player-one StudentAgent --player-two HumanPlayer`
 
 This next one may be useful for you to run games in quick succession to see how your agent performs against the random agent.
 
