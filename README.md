@@ -1,5 +1,7 @@
 # RMIT AI - Connect4
 
+Our A.I. bot implementation report can be found [here](https://github.com/yongjiajun/ConnectFour-AI-Bot/blob/master/ai-implementation-report.pdf) (hosted on GitHub).  
+
 ![screenshot](https://github.com/yongjiajun/ConnectFour-AI/blob/master/img/game_example-small.gif)
 
 ## About The Game
