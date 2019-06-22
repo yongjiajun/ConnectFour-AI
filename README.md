@@ -1,5 +1,7 @@
 # RMIT AI - Connect4
 
+###### Implementation of Connect4 A.I. bot for Artificial Intelligence Assignment 2 [14.7/15 marks], RMIT University 2019.
+
 Our A.I. bot implementation report can be found [here](https://github.com/yongjiajun/ConnectFour-AI-Bot/blob/master/ai-implementation-report.pdf) (hosted on GitHub).  
 
 ![screenshot](https://github.com/yongjiajun/ConnectFour-AI/blob/master/img/game_example-small.gif)
